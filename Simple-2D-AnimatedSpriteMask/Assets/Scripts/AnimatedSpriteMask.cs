@@ -6,6 +6,19 @@ public enum State { OnHold, Running, Finish }
 public enum Usage { OneTime, Multiple }
 #endregion
 
+[System.Serializable]
+public class MultipleUsage
+{
+    public Sprite[] _sprites;
+    public bool useDifferentTimeForFrames = false;
+    public float differentTimeForFrames = .05f;
+
+    public MultipleUsage(Sprite[] sprites)
+    {
+        sprites = _sprites;
+    }
+}
+
 [RequireComponent(typeof(SpriteMask))]
 public class AnimatedSpriteMask : MonoBehaviour
 {
@@ -15,7 +28,12 @@ public class AnimatedSpriteMask : MonoBehaviour
 
     SpriteMask _mask;
 
+    [Header("One Time Usage Sprites:")]
     public Sprite[] _sprite;
+    [Header("Multiple Time Usage Sprites:")]
+    public MultipleUsage[] _multipleUsageSprite;
+    int multiUsageIndex = 0;
+    [Header("Assign Timer Between Frames:")] 
     public float TimeBetweenFrames = .1f;
     public bool animateOnStart = false;
 
@@ -23,7 +41,20 @@ public class AnimatedSpriteMask : MonoBehaviour
     {
         get { return _state; }
     }
-
+    public int IncreaseMultiUsage
+    {
+        set 
+        { 
+            if(multiUsageIndex < _multipleUsageSprite.Length)
+            {
+                multiUsageIndex += 1;
+            }
+        }
+    }
+    public int SetMultiUsage
+    {
+        set { multiUsageIndex = value; }
+    }
     private void Awake()
     {
         _mask = GetComponent<SpriteMask>();
@@ -54,9 +85,7 @@ public class AnimatedSpriteMask : MonoBehaviour
 
     IEnumerator UpdateMask(float timeBetweenFrames)
     {
-        print("State is: " + _state);
-
-        if(_state == State.OnHold)
+        if(_state == State.OnHold && _usage == Usage.OneTime)
         {
             _state = State.Running;
 
@@ -65,7 +94,6 @@ public class AnimatedSpriteMask : MonoBehaviour
                 if (_sprite != null) 
                 {
                     _mask.sprite = _sprite[i];
-                    print("State is: " + _state);
                     yield return new WaitForSeconds(timeBetweenFrames);
                 }
                 else Debug.LogError("Please Assing Sprites in to Sprite Array!");
@@ -73,9 +101,26 @@ public class AnimatedSpriteMask : MonoBehaviour
             }
             if (_usage != Usage.OneTime) _state = State.OnHold;
             else _state = State.Finish;
-
-            print("State is: " + _state);
         }
+        else if(_state == State.OnHold && _usage == Usage.Multiple)
+        {
+            _state = State.Running;
+
+            for (int i = 0; i < _multipleUsageSprite[multiUsageIndex]._sprites.Length; i++)
+            {
+                if (_sprite != null)
+                {
+                    _mask.sprite = _multipleUsageSprite[multiUsageIndex]._sprites[i];
+                    if(!_multipleUsageSprite[multiUsageIndex].useDifferentTimeForFrames) 
+                        yield return new WaitForSeconds(timeBetweenFrames);
+                    else yield return new WaitForSeconds(_multipleUsageSprite[multiUsageIndex].differentTimeForFrames);
+                }
+                else Debug.LogError("Please Assing Sprites in to Sprite Array!");
+
+            }
+            if (_usage != Usage.OneTime) _state = State.OnHold;
+            else _state = State.Finish;
+        } 
 
     }
 
