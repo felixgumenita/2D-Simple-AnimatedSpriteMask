@@ -20,13 +20,15 @@ public class AnimatedSpriteMask_Editor : Editor
             EditorGUILayout.Space();
             animatedSpriteMask.timeBetweenFrames = EditorGUILayout.Slider("Time Between Frames:", animatedSpriteMask.timeBetweenFrames, .001f, 1f);
             EditorGUILayout.Space();
-            animatedSpriteMask.animateOnStart = EditorGUILayout.Toggle("Animate of Start: ", animatedSpriteMask.animateOnStart);
+            animatedSpriteMask.animateOnStart = EditorGUILayout.Toggle("Animate on Start: ", animatedSpriteMask.animateOnStart);
         }
         else
         {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("_multipleUsageSprite"));
             EditorGUILayout.Space();
             animatedSpriteMask.timeBetweenFrames = EditorGUILayout.Slider("Default Time Between Frames:", animatedSpriteMask.timeBetweenFrames, .001f, 1f);
+            EditorGUILayout.Space();
+            animatedSpriteMask.animateOnStart = EditorGUILayout.Toggle("Animate on Start: ", animatedSpriteMask.animateOnStart);
         }
 
         EditorGUILayout.Space();

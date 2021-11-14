@@ -1299,6 +1299,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1672107189}
   - component: {fileID: 1672107187}
+  - component: {fileID: 1672107188}
   m_Layer: 0
   m_Name: Animated Sprite Mask
   m_TagString: Untagged
@@ -1318,27 +1319,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2c603c77a3164b498e722e8c0cbf739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _usage: 0
-  _sprites:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _usage: 1
+  _sprites: []
   _multipleUsageSprite:
-  - _sprites: []
+  - _sprites:
+    - {fileID: 21300000, guid: ffba8822f42e7ab43b679c85aee2b2c0, type: 3}
+    - {fileID: 21300000, guid: 13a9b6aca80abf14c8a1ca75b83e6957, type: 3}
+    - {fileID: 21300000, guid: d30efa39df7c63849adbe3d69ad115d0, type: 3}
+    - {fileID: 21300000, guid: 3bbaacb58a7fd4342aec02da1667ffc6, type: 3}
+    - {fileID: 21300000, guid: 1a3316d56c17580438d5b70a328b5707, type: 3}
+    - {fileID: 21300000, guid: d73016b251ec9a4489b25131e52dd27a, type: 3}
+    - {fileID: 21300000, guid: aea315c87cb829545b1af6ab6a4ca195, type: 3}
+    - {fileID: 21300000, guid: 86506cd7ff81d6348a23bd470533f37e, type: 3}
+    - {fileID: 21300000, guid: 14680f21e3d086944904a2633ad282e0, type: 3}
     useDifferentTimeForFrames: 0
     differentTimeForFrames: 0
-  - _sprites: []
+  - _sprites:
+    - {fileID: 21300000, guid: 14680f21e3d086944904a2633ad282e0, type: 3}
+    - {fileID: 21300000, guid: 86506cd7ff81d6348a23bd470533f37e, type: 3}
+    - {fileID: 21300000, guid: aea315c87cb829545b1af6ab6a4ca195, type: 3}
+    - {fileID: 21300000, guid: d73016b251ec9a4489b25131e52dd27a, type: 3}
+    - {fileID: 21300000, guid: 1a3316d56c17580438d5b70a328b5707, type: 3}
+    - {fileID: 21300000, guid: 3bbaacb58a7fd4342aec02da1667ffc6, type: 3}
+    - {fileID: 21300000, guid: d30efa39df7c63849adbe3d69ad115d0, type: 3}
+    - {fileID: 21300000, guid: 13a9b6aca80abf14c8a1ca75b83e6957, type: 3}
+    - {fileID: 21300000, guid: ffba8822f42e7ab43b679c85aee2b2c0, type: 3}
     useDifferentTimeForFrames: 0
-    differentTimeForFrames: 0
-  timeBetweenFrames: 0.1
+    differentTimeForFrames: 0.03
+  timeBetweenFrames: 0.05
   animateOnStart: 0
+--- !u!331 &1672107188
+SpriteMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672107186}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10758, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 0}
+  m_MaskAlphaCutoff: 0.2
+  m_FrontSortingLayerID: 0
+  m_BackSortingLayerID: 0
+  m_FrontSortingLayer: 0
+  m_BackSortingLayer: 0
+  m_FrontSortingOrder: 0
+  m_BackSortingOrder: 0
+  m_IsCustomRangeActive: 0
+  m_SpriteSortPoint: 0
 --- !u!4 &1672107189
 Transform:
   m_ObjectHideFlags: 0
