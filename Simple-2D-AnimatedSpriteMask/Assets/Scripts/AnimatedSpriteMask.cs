@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 #region Enums
 public enum State { OnHold, Running, Finish }
 public enum MultipleState { OnHold, Running, Finish}
-public enum Usage { OneTime, Multiple }
+public enum Usage { OneTime, MultipleTime }
 #endregion
 
 [System.Serializable]
@@ -20,7 +21,6 @@ public class MultipleUsage
     }
 }
 
-[RequireComponent(typeof(SpriteMask))]
 public class AnimatedSpriteMask : MonoBehaviour
 {
 
@@ -34,12 +34,9 @@ public class AnimatedSpriteMask : MonoBehaviour
 
     #region Public Variables
 
-    [Header("One Time Usage Sprites:")]
-    public Sprite[] _sprite;
-    [Header("Multiple Time Usage Sprites:")]
+    [SerializeField] public Sprite[] _sprites;
     public MultipleUsage[] _multipleUsageSprite;
-    [Header("Assign Timer Between Frames:")] 
-    public float TimeBetweenFrames = .1f;
+    public float timeBetweenFrames = .1f;
     public bool animateOnStart = false;
 
     #endregion
@@ -52,6 +49,7 @@ public class AnimatedSpriteMask : MonoBehaviour
     #endregion
 
     #region Public Function
+
     public State GetState
     {
         get 
@@ -72,41 +70,90 @@ public class AnimatedSpriteMask : MonoBehaviour
         { 
             if(multiUsageIndex < _multipleUsageSprite.Length)
             {
+                _multipleState = MultipleState.OnHold;
                 multiUsageIndex += 1;
             }
         }
     }
     public int SetMultiUsage
     {
-        set { multiUsageIndex = value; }
+        set 
+        {
+            _multipleState = MultipleState.OnHold;
+            multiUsageIndex = value; 
+        }
     }
     public void AnimateSpriteMask()
     {
-        if (TimeBetweenFrames > 0 && _sprite != null)
+        if(_usage == Usage.OneTime)
         {
-            IEnumerator animate = UpdateMask(TimeBetweenFrames);
-            StartCoroutine(animate);
+            if (timeBetweenFrames > 0 && _sprites != null)
+            {
+                IEnumerator animate = UpdateMask(timeBetweenFrames);
+                StartCoroutine(animate);
+            }
+            else if (timeBetweenFrames <= 0) Debug.LogError
+                     ("Time between frames can not 0 (zero) . It can be at least 0.01f");
+            else if (_sprites == null) Debug.LogError
+                     ("Please asing sprites in to sprite array!");
         }
-        else if (TimeBetweenFrames <= 0) Debug.LogError
-                 ("Time between frames can not 0 (zero) . It can be at least 0.01f");
-        else if (_sprite == null) Debug.LogError
-                 ("Please asing sprites in to sprite array!");
+        else
+        {
+            if (_multipleUsageSprite[multiUsageIndex].useDifferentTimeForFrames)
+            {
+                if (_multipleUsageSprite[multiUsageIndex].differentTimeForFrames > 0 && _multipleUsageSprite[multiUsageIndex]._sprites != null)
+                {
+                    IEnumerator animate = UpdateMask(timeBetweenFrames);
+                    StartCoroutine(animate);
+                }
+                else if (_multipleUsageSprite[multiUsageIndex].differentTimeForFrames <= 0) Debug.LogError
+                         ("Time between frames can not 0 (zero) . It can be at least 0.01f");
+                else if (_multipleUsageSprite[multiUsageIndex]._sprites == null) Debug.LogError
+                         ("Please asing sprites in to sprite array!");
+
+            }
+            else
+            {
+                if (timeBetweenFrames > 0 && _sprites != null)
+                {
+                    IEnumerator animate = UpdateMask(timeBetweenFrames);
+                    StartCoroutine(animate);
+                }
+                else if (timeBetweenFrames <= 0) Debug.LogError
+                         ("Time between frames can not 0 (zero) . It can be at least 0.01f");
+                else if (_sprites == null) Debug.LogError
+                         ("Please asing sprites in to sprite array!");
+            }
+        }
     }
+
     #endregion
 
     private void Awake()
     {
-        _mask = GetComponent<SpriteMask>();
-        _mask.sprite = null;
+        if(_mask == null) _mask = GetComponent<SpriteMask>();
     }
-
     private void Start()
     {
         if (animateOnStart)
         {
-            IEnumerator animate = UpdateMask(TimeBetweenFrames);
+            IEnumerator animate = UpdateMask(timeBetweenFrames);
             StartCoroutine(animate);
         }
+    }
+    public void ResetComponent()
+    {
+        _sprites = null;
+        _multipleUsageSprite = null;
+        timeBetweenFrames = .1f;
+        animateOnStart = false;
+
+        _state = State.OnHold;
+        _multipleState = MultipleState.OnHold;
+        _usage = Usage.OneTime;
+
+        _mask = null;
+        multiUsageIndex = 0;
     }
     IEnumerator UpdateMask(float timeBetweenFrames)
     {
@@ -114,11 +161,11 @@ public class AnimatedSpriteMask : MonoBehaviour
         {
             _state = State.Running;
 
-            for(int i = 0; i < _sprite.Length; i++)
+            for(int i = 0; i < _sprites.Length; i++)
             {
-                if (_sprite != null) 
+                if (_sprites != null) 
                 {
-                    _mask.sprite = _sprite[i];
+                    _mask.sprite = _sprites[i];
                     yield return new WaitForSeconds(timeBetweenFrames);
                 }
                 else Debug.LogError("Please Assing Sprites in to Sprite Array!");
@@ -127,13 +174,13 @@ public class AnimatedSpriteMask : MonoBehaviour
             if (_usage != Usage.OneTime) _state = State.OnHold;
             else _state = State.Finish;
         }
-        else if(_multipleState == MultipleState.OnHold && _usage == Usage.Multiple)
+        else if(_multipleState == MultipleState.OnHold && _usage == Usage.MultipleTime)
         {
             _multipleState = MultipleState.Running;
 
             for (int i = 0; i < _multipleUsageSprite[multiUsageIndex]._sprites.Length; i++)
             {
-                if (_sprite != null)
+                if (_multipleUsageSprite[multiUsageIndex]._sprites != null)
                 {
                     _mask.sprite = _multipleUsageSprite[multiUsageIndex]._sprites[i];
                     if(!_multipleUsageSprite[multiUsageIndex].useDifferentTimeForFrames) 
@@ -148,5 +195,4 @@ public class AnimatedSpriteMask : MonoBehaviour
         } 
 
     }
-
 }
