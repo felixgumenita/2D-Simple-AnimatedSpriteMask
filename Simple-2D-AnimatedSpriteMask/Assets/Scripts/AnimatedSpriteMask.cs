@@ -64,17 +64,6 @@ public class AnimatedSpriteMask : MonoBehaviour
             return _multipleState;
         }
     }
-    public int IncreaseMultiUsage
-    {
-        set 
-        { 
-            if(multiUsageIndex < _multipleUsageSprite.Length)
-            {
-                _multipleState = MultipleState.OnHold;
-                multiUsageIndex += 1;
-            }
-        }
-    }
     public int SetMultiUsage
     {
         set 
