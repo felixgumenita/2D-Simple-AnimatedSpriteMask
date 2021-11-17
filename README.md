@@ -42,4 +42,4 @@ Usage
 | ------------- | ------------------------------ |
 | `OnHold`      | Animation Sprite Mask is on hold state. |
 | `Running`   | Animation Sprite Mask is in animation state. |
-| `Finish`   | Animation Sprite Mask is finish state. |
+| `Finish`   | Animation Sprite Mask is finish. |
