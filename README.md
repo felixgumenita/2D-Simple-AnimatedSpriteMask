@@ -19,18 +19,27 @@ Usage
 + You can accsess to AnimateSpriteMask() function enywhere you want.
 
 
- Functions
+ Functions and Enums
 =============
-| Public Functions  | Private Functions |
+| Public Functions  | Enums |
 | ----------------- | ----------------- |
-| GetState(State)  | Awake()  |
-| GetMultipleState(MultipleState)  | Start()  |
-| AnimateSpriteMask()  | UpdateMask(timeBetweenFrames) |
-| ResetComponent()  | 
+| AnimateSpriteMask()  | State  |
+| ResetComponent()  | MultipleState  |
 
 | Public Function | Description                    |
 | ------------- | ------------------------------ |
-| `GetState(State)`      | Accsess to current **One Time Usage** state of Animated Sprite Mask (OnHold , Running, Finish) |
-| `GetMultipleState(MultipleState)`   | Accsess to current **Multiple Time Usage** state of Animated Sprite Mask (OnHold, Running, Finish) |
 | `AnimateSpriteMask()`   | Trigger your Animated Sprite Mask |
 | `AnimateSpriteMask()`   | Reset all your settings in AnimatedSpriteMask |
+| `GetState`      | Accsess to current **One Time Usage** state of Animated Sprite Mask|
+| `GetMultipleState`   | Accsess to current **Multiple Time Usage** state of Animated Sprite Mask|
+
+| Enums | Description                    |
+| ------------- | ------------------------------ |
+| `State`      | Current state of **One Time Usage Animation** Sprite Mask|
+| `MultipleState`   | Current state of **Multiple Time Usage Animation** Sprite Mask|
+
+| States | Description                    |
+| ------------- | ------------------------------ |
+| `OnHold`      | Animation Sprite Mask is on hold state. |
+| `Running`   | Animation Sprite Mask is in animation state. |
+| `Finish`   | Animation Sprite Mask is finish state. |
